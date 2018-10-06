@@ -106,4 +106,25 @@ router.get("/accounts/verify", async (req, res) => {
 	}
 });
 
+router.get("/accounts/logout", async (req, res) => {
+	const { token } = req.query;
+	if (!mongoose.Types.ObjectId.isValid(token)) {
+		return res.send({ success: false, message: "Invalid Token" });
+	}
+
+	try {
+		const result1 = await UserSession.findOne({ _id: token, isDeleted: false });
+		console.log(result1);
+		const result = await UserSession.findOneAndUpdate(
+			{ _id: token, isDeleted: false },
+			{ $set: { isDeleted: true } },
+			null
+		);
+		return res.send({ success: true, message: "Successfully Logged out" });
+	} catch (err) {
+		console.error("Error: ", err);
+		return res.send({ success: false, message: "Some Error occured" });
+	}
+});
+
 module.exports = router;
