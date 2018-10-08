@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const port = process.env.PORT || 8080;
 const users = require("./routes/api/signin.js");
+const cors = require("cors");
 
 // Configuration
 // ================================================================================================
@@ -18,6 +19,7 @@ mongoose.Promise = global.Promise;
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cors());
 
 // Routing
 app.use("/api/users", users);

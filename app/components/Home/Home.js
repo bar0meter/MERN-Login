@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import 'whatwg-fetch';
+import React, { Component } from "react";
+import "whatwg-fetch";
 
 class Home extends Component {
   constructor(props) {
@@ -18,7 +18,7 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    fetch('/api/counters')
+    fetch("/api/counters")
       .then(res => res.json())
       .then(json => {
         this.setState({
@@ -28,7 +28,7 @@ class Home extends Component {
   }
 
   newCounter() {
-    fetch('/api/counters', { method: 'POST' })
+    fetch("/api/counters", { method: "POST" })
       .then(res => res.json())
       .then(json => {
         let data = this.state.counters;
@@ -43,7 +43,7 @@ class Home extends Component {
   incrementCounter(index) {
     const id = this.state.counters[index]._id;
 
-    fetch(`/api/counters/${id}/increment`, { method: 'PUT' })
+    fetch(`/api/counters/${id}/increment`, { method: "PUT" })
       .then(res => res.json())
       .then(json => {
         this._modifyCounter(index, json);
@@ -53,7 +53,7 @@ class Home extends Component {
   decrementCounter(index) {
     const id = this.state.counters[index]._id;
 
-    fetch(`/api/counters/${id}/decrement`, { method: 'PUT' })
+    fetch(`/api/counters/${id}/decrement`, { method: "PUT" })
       .then(res => res.json())
       .then(json => {
         this._modifyCounter(index, json);
@@ -63,10 +63,9 @@ class Home extends Component {
   deleteCounter(index) {
     const id = this.state.counters[index]._id;
 
-    fetch(`/api/counters/${id}`, { method: 'DELETE' })
-      .then(_ => {
-        this._modifyCounter(index, null);
-      });
+    fetch(`/api/counters/${id}`, { method: "DELETE" }).then(_ => {
+      this._modifyCounter(index, null);
+    });
   }
 
   _modifyCounter(index, data) {
@@ -89,14 +88,14 @@ class Home extends Component {
         <p>Counters:</p>
 
         <ul>
-          { this.state.counters.map((counter, i) => (
+          {this.state.counters.map((counter, i) => (
             <li key={i}>
               <span>{counter.count} </span>
               <button onClick={() => this.incrementCounter(i)}>+</button>
               <button onClick={() => this.decrementCounter(i)}>-</button>
               <button onClick={() => this.deleteCounter(i)}>x</button>
             </li>
-          )) }
+          ))}
         </ul>
 
         <button onClick={this.newCounter}>New counter</button>
